@@ -3,6 +3,7 @@ import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import { cn } from "@/lib/utils";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["500", "300", "400", "700"] });
 
@@ -17,11 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn("w-full h-full bg-[#000000] text-white", ubuntu.className)}>
-        <Header />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={cn("w-full h-full bg-[#000000] text-white", ubuntu.className)}>
+          <Header />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
+
   );
 }

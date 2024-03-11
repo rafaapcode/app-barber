@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { MenuIcon } from "lucide-react";
 import Search from "./Search";
 import Menu from "./Menu";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
     return (
@@ -15,16 +15,18 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="flex">
-                   <Search />
+                    <Search />
                 </div>
                 <div className="hidden md:block">
                     <Link href={"#"} className="text-sm md:text-base transition-colors duration-200 text-[#282828] hover:text-[#414040]">Agendamentos</Link>
-                    <Button variant={"ghost"} className="text-sm md:text-base ml-5">Login</Button>
+                    <SignedIn>
+                        <UserButton afterSignOutUrl="/"/>
+                    </SignedIn>
+                    <SignedOut>
+                        <Button variant={"ghost"} className="text-sm md:text-base ml-5"><SignInButton afterSignInUrl="/" afterSignUpUrl="/"/></Button>
+                    </SignedOut>
                 </div>
                 <div className="md:hidden">
-                    {/* <Button variant={"ghost"}>
-                        <MenuIcon />
-                    </Button> */}
                     <Menu />
                 </div>
             </div>

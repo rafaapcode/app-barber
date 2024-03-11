@@ -4,6 +4,7 @@ import { MenuIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import Link from "next/link";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Menu() {
     return (
@@ -22,7 +23,12 @@ export default function Menu() {
                     </DialogHeader>
                     <div className="flex flex-col items-center justify-center space-y-2">
                         <Link href={"#"} className="text-sm md:text-base transition-colors duration-200 text-[#ffffff] hover:text-[#696969]">Agendamentos</Link>
-                        <Button variant={"ghost"} className="text-sm">Login</Button>
+                        <SignedIn>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                        <SignedOut>
+                            <Button variant={"ghost"} className="text-sm"><SignInButton afterSignInUrl="/" afterSignUpUrl="/"/></Button>
+                        </SignedOut>
                     </div>
                 </DialogContent>
             </Dialog>
