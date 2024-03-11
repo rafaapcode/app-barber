@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { MenuIcon, SearchIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import Search from "./Search";
+import Menu from "./Menu";
 
 export default function Header() {
     return (
@@ -22,9 +22,10 @@ export default function Header() {
                     <Button variant={"ghost"} className="text-sm md:text-base ml-5">Login</Button>
                 </div>
                 <div className="md:hidden">
-                    <Button variant={"ghost"}>
+                    {/* <Button variant={"ghost"}>
                         <MenuIcon />
-                    </Button>
+                    </Button> */}
+                    <Menu />
                 </div>
             </div>
         </header>
