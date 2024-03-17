@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn("w-full h-full bg-[#000000] text-white", ubuntu.className)}>
+        <body className={cn("relative w-full h-full bg-[#000000] text-white", ubuntu.className)}>
           <Header />
           {children}
         </body>

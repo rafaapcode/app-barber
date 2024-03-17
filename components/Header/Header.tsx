@@ -17,13 +17,13 @@ export default function Header() {
                 <div className="flex">
                     <Search />
                 </div>
-                <div className="hidden md:block">
+                <div className="hidden md:flex md:items-center gap-x-5">
                     <Link href={"#"} className="text-sm md:text-base transition-colors duration-200 text-[#282828] hover:text-[#414040]">Agendamentos</Link>
                     <SignedIn>
-                        <UserButton afterSignOutUrl="/"/>
+                        <UserButton afterSignOutUrl="/" />
                     </SignedIn>
                     <SignedOut>
-                        <Button variant={"ghost"} className="text-sm md:text-base ml-5"><SignInButton afterSignInUrl="/" afterSignUpUrl="/"/></Button>
+                        <Button variant={"ghost"} className="text-sm md:text-base"><SignInButton afterSignInUrl="/" afterSignUpUrl="/" /></Button>
                     </SignedOut>
                 </div>
                 <div className="md:hidden">
