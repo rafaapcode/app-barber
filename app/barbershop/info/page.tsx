@@ -7,10 +7,15 @@ interface BarberShopInfoProps {
 }
 
 export default function BarberShopInfo({ searchParams }: BarberShopInfoProps) {
+    const barbersData = [{
+        photoUrlBarber: "/barber.webp",
+        barbersName: "João"
+    }]
+
     return (
         <main className="w-full">
             <div className="container mx-auto">
-                <InfoBarbershop logoUrl="/logo.webp" bannerUrl="/barbershopimage.jpg" avaliacao={10} descricao="Rua taltaltal, Bairro taltaltal, 9083" nome="Nome" photoUrlBarbers={["/barbeariaematividdade.jpg"]} photoUrlBarbershop={["/barbeariaematividdade.jpg"]} status={"ABERTA"}/> 
+                <InfoBarbershop barbersData={barbersData} logoUrl="/logo.webp" bannerUrl="/barbershopimage.jpg" avaliacao={10} descricao="Rua taltaltal, Bairro taltaltal, 9083" nome="Nome" photoUrlBarbershop={["/barbeariaematividdade.jpg"]} status={"ABERTA"}/> 
             </div>
         </main>
     )

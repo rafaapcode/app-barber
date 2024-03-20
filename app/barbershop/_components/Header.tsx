@@ -1,17 +1,19 @@
 import FeedBackBadge from "@/components/FeedBackBadge";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-interface HeaderBarbershopInfoProps {
+interface HeaderProps {
     bannerUrl: string;
     logoUrl: string;
     nome: string;
     descricao: string;
     avaliacao: number;
-    status: string;
+    status?: string;
+    barber?: boolean;
 }
 
-export default function HeaderBarbershopInfo({ avaliacao, bannerUrl, descricao, logoUrl, nome, status }: HeaderBarbershopInfoProps) {
+export default function Header({ avaliacao, bannerUrl, descricao, logoUrl, nome, status, barber }: HeaderProps) {
     return (
         <>
             <div className="absolute w-full h-full z-10 bg-black/45" />
@@ -25,14 +27,14 @@ export default function HeaderBarbershopInfo({ avaliacao, bannerUrl, descricao, 
                         <div className="self-end flex md:gap-3">
                             <div className="flex flex-col">
                                 <h1 className="text-base md:text-2xl text-white font-semibold">{nome}</h1>
-                                <p className="mt-3 md:mt-0 text-xs md:text-sm text-[#757575]">{descricao}</p>
+                                {!barber && <p className="mt-3 md:mt-0 text-xs md:text-sm text-[#757575]">{descricao}</p>}
                             </div>
                             <FeedBackBadge style="w-[55px] h-[20px] rounded-full flex justify-center items-center" whiteMode avaliacao={avaliacao} />
                         </div>
                     </div>
-                    <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
+                    {barber ? <Button variant={"ghost"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">Agendar</Button> : <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
                         {status}
-                    </Badge>
+                    </Badge>}
                 </div>
             </div>
         </>
