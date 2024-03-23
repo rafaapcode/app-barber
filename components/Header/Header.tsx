@@ -18,7 +18,7 @@ export default function Header() {
                     <Search />
                 </div>
                 <div className="hidden md:flex md:items-center gap-x-5">
-                    <Link href={"#"} className="text-sm md:text-base transition-colors duration-200 text-[#282828] hover:text-[#414040]">Agendamentos</Link>
+                    <Link href={"/agendamentos"} className="text-sm md:text-base transition-colors duration-200 text-[#282828] hover:text-[#414040]">Agendamentos</Link>
                     <SignedIn>
                         <UserButton afterSignOutUrl="/" />
                     </SignedIn>

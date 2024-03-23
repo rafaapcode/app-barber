@@ -1,3 +1,4 @@
+import Schedule from "@/app/barber/_components/Schedule";
 import FeedBackBadge from "@/components/FeedBackBadge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,10 @@ interface HeaderProps {
     avaliacao: number;
     status?: string;
     barber?: boolean;
+    barbersName?: string;
 }
 
-export default function Header({ avaliacao, bannerUrl, descricao, logoUrl, nome, status, barber }: HeaderProps) {
+export default function Header({ avaliacao, bannerUrl, descricao, logoUrl, nome, status, barber, barbersName}: HeaderProps) {
     return (
         <>
             <div className="absolute w-full h-full z-10 bg-black/45" />
@@ -34,7 +36,7 @@ export default function Header({ avaliacao, bannerUrl, descricao, logoUrl, nome,
                             {!barber && <FeedBackBadge style="w-[55px] h-[20px] rounded-full flex justify-center items-center" whiteMode avaliacao={avaliacao} />}
                         </div>
                     </div>
-                    {barber ? <Button variant={"ghost"} className="self-start mt-12 md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">Agendar</Button> : <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
+                    {barber ? <Schedule barbersName={barbersName ? barbersName : ""}/> : <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
                         {status}
                     </Badge>}
                 </div>
