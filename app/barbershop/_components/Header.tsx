@@ -1,6 +1,7 @@
 import FeedBackBadge from "@/components/FeedBackBadge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 interface HeaderProps {
@@ -25,14 +26,15 @@ export default function Header({ avaliacao, bannerUrl, descricao, logoUrl, nome,
                             <Image fill alt="Logo of Barbershop" src={logoUrl} className="object-cover rounded-full" />
                         </div>
                         <div className="self-end flex md:gap-3">
-                            <div className="flex flex-col">
-                                <h1 className="text-base md:text-2xl text-white font-semibold">{nome}</h1>
+                            <div className={cn("flex flex-col", barber && "flex-row items-center gap-5")}>
+                                <h1 className="text-base md:text-2xl text-white font-semibold ">{nome}</h1>
                                 {!barber && <p className="mt-3 md:mt-0 text-xs md:text-sm text-[#757575]">{descricao}</p>}
+                                {barber && <FeedBackBadge style="w-[55px] h-[20px] rounded-full flex justify-center items-center" whiteMode avaliacao={avaliacao} />}
                             </div>
-                            <FeedBackBadge style="w-[55px] h-[20px] rounded-full flex justify-center items-center" whiteMode avaliacao={avaliacao} />
+                            {!barber && <FeedBackBadge style="w-[55px] h-[20px] rounded-full flex justify-center items-center" whiteMode avaliacao={avaliacao} />}
                         </div>
                     </div>
-                    {barber ? <Button variant={"ghost"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">Agendar</Button> : <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
+                    {barber ? <Button variant={"ghost"} className="self-start mt-12 md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">Agendar</Button> : <Badge variant={"secondary"} className="self-start md:self-center w-[45px] h-[20px] md:w-[70px] md:h-[25px] flex justify-center item text-[10px] md:text-xs md:mr-5">
                         {status}
                     </Badge>}
                 </div>
