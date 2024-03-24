@@ -48,9 +48,62 @@ export async function POST(req: Request) {
         })
     }
 
-    const eventType = evt.type;
+    const eventType = evt;
 
-    if (eventType === "user.created") {
+    await HandleAuthEvents(eventType, user);
+
+    // if (eventType === "user.created") {
+    //     const data = {
+    //         email: user.data.email_addresses[0].email_address,
+    //         name: `${user.data.first_name} ${user.data.last_name}`,
+    //         userId: user.data.id,
+    //         profileImage: user.data.profile_image_url,
+    //         userName: user.data.username
+    //     }
+
+    //     await db.user.create({
+    //         data,
+    //     });
+    // }
+
+    // if(eventType === "user.deleted") {
+    //     await db.user.delete({
+    //         where: {
+    //             userId: user.data.id
+    //         }
+    //     });
+    // }
+
+    // if(eventType === "user.updated") {
+    //     const currentUser = await db.user.findUnique({
+    //         where: {
+    //             id: user.data.id
+    //         }
+    //     });
+
+    //     if(!currentUser) {
+    //         return new Response("Usuário não encontrado", { status: 404 });
+    //     }
+
+    //     await db.user.update({
+    //         where: {
+    //             userId: user.data.id
+    //         },
+    //         data: {
+    //             userName: user.data.username,
+    //             profileImage: user.data.profile_image_url,
+    //         }
+    //     });
+    // }
+
+    return new Response('OK', { status: 200 })
+}
+
+
+async function HandleAuthEvents(eventType: WebhookEvent, user: PayloadUser) {
+    const event = eventType.type;
+
+    if (event === "user.created") {
         const data = {
             email: user.data.email_addresses[0].email_address,
             name: `${user.data.first_name} ${user.data.last_name}`,
@@ -64,7 +117,7 @@ export async function POST(req: Request) {
         });
     }
 
-    if(eventType === "user.deleted") {
+    if(event === "user.deleted") {
         await db.user.delete({
             where: {
                 userId: user.data.id
@@ -72,7 +125,7 @@ export async function POST(req: Request) {
         });
     }
 
-    if(eventType === "user.updated") {
+    if(event === "user.updated") {
         const currentUser = await db.user.findUnique({
             where: {
                 id: user.data.id
@@ -93,11 +146,4 @@ export async function POST(req: Request) {
             }
         });
     }
-
-    return new Response('OK', { status: 200 })
-}
-
-
-async function HandleAuthEvents(eventType: WebhookEvent) {
-    
 }
