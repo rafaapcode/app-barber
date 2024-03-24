@@ -54,16 +54,15 @@ export default function Schedule({ barbersName }: ScheduleProps) {
                             </Select>
                         </div>
                     </div>
-                    <Button type="submit">Agendar</Button>
+                    <DialogFooter className="sm:justify-start">
+                        <DialogClose asChild>
+                            <Button ref={closeRef} type="button" variant="secondary">
+                                Fechar
+                            </Button>
+                        </DialogClose>
+                        <Button type="submit" className="mb-2 md:mb-0">Agendar</Button>
+                    </DialogFooter>
                 </form>
-
-                <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                        <Button ref={closeRef} type="button" variant="secondary">
-                            Fechar
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     )
