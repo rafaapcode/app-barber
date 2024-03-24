@@ -1,6 +1,8 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import db from '@/lib/db'
+import { PayloadUser } from '@/types/clerkPayload'
 
 export async function POST(req: Request) {
 
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
     // Get the body
     const payload = await req.json()
     const body = JSON.stringify(payload);
-
+    const user: PayloadUser = payload;
     // Create a new Svix instance with your secret.
     const wh = new Webhook(WEBHOOK_SECRET);
 
@@ -46,12 +48,56 @@ export async function POST(req: Request) {
         })
     }
 
-    // Get the ID and type
-    const { id } = evt.data;
     const eventType = evt.type;
-    
-    console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-    
 
-    return new Response('', { status: 200 })
+    if (eventType === "user.created") {
+        const data = {
+            email: user.data.email_addresses[0].email_address,
+            name: `${user.data.first_name} ${user.data.last_name}`,
+            userId: user.data.id,
+            profileImage: user.data.profile_image_url,
+            userName: user.data.username
+        }
+
+        await db.user.create({
+            data,
+        });
+    }
+
+    if(eventType === "user.deleted") {
+        await db.user.delete({
+            where: {
+                userId: user.data.id
+            }
+        });
+    }
+
+    if(eventType === "user.updated") {
+        const currentUser = await db.user.findUnique({
+            where: {
+                id: user.data.id
+            }
+        });
+
+        if(!currentUser) {
+            return new Response("Usuário não encontrado", { status: 404 });
+        }
+
+        await db.user.update({
+            where: {
+                userId: user.data.id
+            },
+            data: {
+                userName: user.data.username,
+                profileImage: user.data.profile_image_url,
+            }
+        });
+    }
+
+    return new Response('OK', { status: 200 })
+}
+
+
+async function HandleAuthEvents(eventType: WebhookEvent) {
+    
 }
